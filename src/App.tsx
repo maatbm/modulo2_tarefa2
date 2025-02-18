@@ -1,9 +1,9 @@
 import './App.css';
-import RenderMoviesTable from './components/movieTable/movieTable';
+import SearchBar from './components/searchBar/searchBar';
 
 function App() {
   return (
-    <RenderMoviesTable />
+    <SearchBar />
   );
 }
 
