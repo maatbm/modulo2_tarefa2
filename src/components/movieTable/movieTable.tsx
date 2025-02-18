@@ -22,7 +22,11 @@ type Movie = {
   imagem: string;
 };
 
-function RenderMoviesTable() {
+type Props = {
+  filterMovie: string;
+};
+
+function RenderMoviesTable(props: Props) {
   const [movies, setMovies] = useState<Movie[]>([]);
 
   useEffect(() => {
@@ -33,26 +37,36 @@ function RenderMoviesTable() {
     loadMovies();
   }, []);
 
+  const filteredMovies = movies.filter(
+    (movie) => 
+      movie.nome.toLowerCase().includes(props.filterMovie.toLowerCase()) || 
+      movie.genero.toLowerCase().includes(props.filterMovie.toLowerCase())
+  );
+
   return (
     <div className="table">
-      <table>
-        <thead>
-          <tr className="titles">
-            <th className="rounded-top-left">Nome</th>
-            <th>Gênero</th>
-            <th className="rounded-top-right">Capa</th>
-          </tr>
-        </thead>
-        <tbody>
-          {movies.map((movie, index) => (
-            <tr key={movie.id} className={index % 2 === 0 ? "content" : "content_middle"}>
-              <td>{movie.nome}</td>
-              <td>{movie.genero}</td>
-              <td><img className="banner" src={movie.imagem} alt={movie.nome} /></td>
+      {filteredMovies.length > 0 ? (
+        <table>
+          <thead>
+            <tr className="titles">
+              <th className="rounded-top-left">Nome</th>
+              <th>Gênero</th>
+              <th className="rounded-top-right">Capa</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {filteredMovies.map((movie, index) => (
+              <tr key={movie.id} className={index % 2 === 0 ? "content" : "content_middle"}>
+                <td>{movie.nome}</td>
+                <td>{movie.genero}</td>
+                <td><img className="banner" src={movie.imagem} alt={movie.nome} /></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ):(
+        <p>Nenhum filme encontrado</p>
+      )}
     </div>
   );
 };

@@ -9,22 +9,12 @@ function SearchBar(){
     setSearchTerm(event.target.value);
   };
 
-  function handleSearch(){
-    console.log('Searching for:', searchTerm);
-  };
-
   return (
     <>
-        <div>
-        <input
-            type="text"
-            value={searchTerm}
-            onChange={handleInputChange}
-            placeholder="Digite sua pesquisa..."
-        />
-        <button onClick={handleSearch}>Pesquisar</button>
-        </div>
-        <RenderMoviesTable />
+    <div>
+        <input type="text" value={searchTerm} onChange={handleInputChange} placeholder="Insira a palavra chave" className="searchInput"/>
+    </div>
+    <RenderMoviesTable filterMovie={searchTerm}/>
     </>
   );
 };
